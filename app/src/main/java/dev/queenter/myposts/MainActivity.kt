@@ -3,14 +3,18 @@ package dev.queenter.myposts
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import dev.queenter.myposts.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding:ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding=ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         fetchPosts()
     }
     fun fetchPosts(){
@@ -22,6 +26,9 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful){
                     var posts = response.body()
                     Toast.makeText(baseContext, "${posts!!.size} posts", Toast.LENGTH_LONG).show()
+                    var displayPostsRvAdapter=displayPostsRvAdapter(baseContext,posts)
+                    binding.rvDisplay.layoutManager=LinearLayoutManager(baseContext)
+                    binding.rvDisplay.adapter=displayPostsRvAdapter
 
                 }
             }
