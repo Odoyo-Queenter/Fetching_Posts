@@ -1,6 +1,7 @@
 package dev.queenter.myposts
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,12 @@ class displayPostsRvAdapter (var context: Context, var displayPost: List<Post>):
             tvId.text=Currentposts.id.toString()
             tvTitle.text=Currentposts.title
             tvBody.text=Currentposts.body
+            var context = holder.itemView.context
+            holder.binding.cvPost.setOnClickListener {
+                val intent = Intent(context, CommentsActivity::class.java)
+                intent.putExtra("POST_ID", Currentposts.id)
+                context.startActivity(intent)
+            }
 
         }
 
